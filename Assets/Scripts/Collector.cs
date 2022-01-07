@@ -110,7 +110,7 @@ public class Collector : MonoBehaviour
 			targetPickup.GameObject.transform.position.y - transform.position.y);
 		direction.Normalize();
 		rb2d.velocity = Vector2.zero;
-		rb2d.AddForce(direction * BaseImpulseForceMagnitude, 
+		rb2d.AddForce(direction * (BaseImpulseForceMagnitude + ImpulseForceIncrement * targets.Count), 
 			ForceMode2D.Impulse);
 	}
 	
