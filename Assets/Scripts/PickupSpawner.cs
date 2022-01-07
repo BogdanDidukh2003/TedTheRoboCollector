@@ -16,6 +16,8 @@ public class PickupSpawner : MonoBehaviour
     const float SpawnDelay = 0.3f;
 	Timer spawnTimer;
     const int MaxNumPickups = 20;
+    const int MaxPickupsNumberToSpawn = 50;
+    int alreadySpawnedPickupsNumber = 0;
 
 	// spawn location support
     Vector3 location = Vector3.zero;
@@ -82,7 +84,12 @@ public class PickupSpawner : MonoBehaviour
 	/// Handles the spawn timer finished event
 	/// </summary>
 	void HandleSpawnTimerFinishedEvent()
-    {
+	{
+		if (alreadySpawnedPickupsNumber >= MaxPickupsNumberToSpawn)
+	    {
+		    return;
+	    }
+
 		// only spawn a pickup if below max number
 		if (GameObject.FindGameObjectsWithTag("Pickup").Length < MaxNumPickups)
         {
@@ -121,7 +128,9 @@ public class PickupSpawner : MonoBehaviour
                                     location, Quaternion.identity);
             pickupSpawnedEvent.Invoke(pickup);
 		}
-	}
+
+		alreadySpawnedPickupsNumber++;
+    }
 
 	/// <summary>
 	/// Sets min and max for a pickup collision rectangle
