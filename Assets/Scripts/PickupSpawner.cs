@@ -75,6 +75,7 @@ public class PickupSpawner : MonoBehaviour
         spawnTimer.Run();
 
 		// add as invoker for pickup spawned event
+		EventManager.AddInvoker(this);
 	}
 
 	/// <summary>

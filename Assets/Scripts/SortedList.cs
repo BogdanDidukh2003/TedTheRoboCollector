@@ -57,7 +57,15 @@ public class SortedList<T> where T:IComparable
     /// <param name="item">item</param>
     public void Add(T item)
     {
-        // add your implementation below
+        int i;
+        for (i = 0; i < items.Count; i++)
+        {
+            if (item.CompareTo(items[i]) > 0)
+            {
+                break;
+            }
+        }
+        items.Insert(i, item);
     }
 
     /// <summary>

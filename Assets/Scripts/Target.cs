@@ -77,9 +77,9 @@ public class Target : IComparable
     public int CompareTo(object obj)
     {
         // replace the code below with your implementation
-        return 0;
+        return Math.Sign(Distance - ((Target)obj).Distance);
     }
-	
+    
     /// <summary>
     /// Converts the target to a string
     /// </summary>

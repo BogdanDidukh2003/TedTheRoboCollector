@@ -10,7 +10,7 @@ public class Collector : MonoBehaviour
 	#region Fields
 
     // targeting support
-    SortedList<Target> targets = new SortedList<Target>();
+    [SerializeField] SortedList<Target> targets = new SortedList<Target>();
     Target targetPickup = null;
 
     // movement support
@@ -40,6 +40,11 @@ public class Collector : MonoBehaviour
 		rb2d = GetComponent<Rigidbody2D>();
 
         // add as listener for pickup spawned event
+        EventManager.AddListener(d =>
+        {
+	        targets.Add(new Target(d, transform.position));
+	        Debug.Log(targets[targets.Count - 1]);
+        });
 	}
 
     /// <summary>
