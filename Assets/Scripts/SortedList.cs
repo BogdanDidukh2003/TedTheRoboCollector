@@ -75,6 +75,7 @@ public class SortedList<T> where T:IComparable
     public void RemoveAt(int index)
     {
         // add your implementation below
+        items.RemoveAt(index);
     }
 
     /// <summary>

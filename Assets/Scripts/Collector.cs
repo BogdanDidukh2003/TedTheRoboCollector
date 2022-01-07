@@ -40,13 +40,26 @@ public class Collector : MonoBehaviour
 		rb2d = GetComponent<Rigidbody2D>();
 
         // add as listener for pickup spawned event
-        EventManager.AddListener(d =>
-        {
-	        targets.Add(new Target(d, transform.position));
-	        Debug.Log(targets[targets.Count - 1]);
-        });
+        EventManager.AddListener(OnPickupSpawned);
 	}
 
+    void OnPickupSpawned(GameObject pickup)
+    {
+	    targets.Add(new Target(pickup, transform.position));
+	    if (targets.Count == 1)
+	    {
+		    SetTarget(targets[0]);
+		    return;
+	    }
+
+	    Target lastTargetInList = targets[targets.Count - 1];
+	    Debug.Log($"OnPickupSpawned: distance is {lastTargetInList}");
+	    if (targetPickup.Distance > lastTargetInList.Distance)
+	    {
+		    SetTarget(lastTargetInList);
+	    }
+    }
+    
     /// <summary>
     /// Called when another object is within a trigger collider
     /// attached to this object
@@ -58,20 +71,21 @@ public class Collector : MonoBehaviour
 		if (other.gameObject == targetPickup.GameObject)
         {
             // remove collected pickup from list of targets and game
-			
+            //targets.RemoveAt(targets.IndexOf(targetPickup));
+
 			// go to next target if there is one
 
 		}
 	}
 
-    /*
 	/// <summary>
 	/// Sets the target pickup to the provided pickup
 	/// </summary>
 	/// <param name="pickup">Pickup.</param>
-	void SetTarget(GameObject pickup)
+	void SetTarget(Target pickup)
     {
 		targetPickup = pickup;
+		Debug.Log($"SetTarget: distance is {targetPickup.Distance}");
 		GoToTargetPickup();
 	}
 
@@ -82,14 +96,13 @@ public class Collector : MonoBehaviour
     {
         // calculate direction to target pickup and start moving toward it
 		Vector2 direction = new Vector2(
-			targetPickup.transform.position.x - transform.position.x,
-			targetPickup.transform.position.y - transform.position.y);
+			targetPickup.GameObject.transform.position.x - transform.position.x,
+			targetPickup.GameObject.transform.position.y - transform.position.y);
 		direction.Normalize();
 		rb2d.velocity = Vector2.zero;
 		rb2d.AddForce(direction * BaseImpulseForceMagnitude, 
 			ForceMode2D.Impulse);
 	}
-	*/
 	
 	#endregion
 }
