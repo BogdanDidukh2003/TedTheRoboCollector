@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// A collecting game object
@@ -71,11 +69,23 @@ public class Collector : MonoBehaviour
 		if (other.gameObject == targetPickup.GameObject)
         {
             // remove collected pickup from list of targets and game
-            //targets.RemoveAt(targets.IndexOf(targetPickup));
+            int index = targets.IndexOf(targetPickup);
+            Debug.Log(index);
+            targets.RemoveAt(index);
+            Destroy(other.gameObject);
+            if (targets.Count != 0)
+            {
+	            for (int i = 0; i < targets.Count - 1; i++)
+	            {
+		            targets[i].UpdateDistance(transform.position);
+	            }
 
-			// go to next target if there is one
+	            targets.Sort();
 
-		}
+	            // go to next target if there is one
+	            SetTarget(targets[targets.Count - 1]);
+            }
+        }
 	}
 
 	/// <summary>

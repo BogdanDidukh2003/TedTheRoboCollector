@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using UnityEngine;
 
 /// <summary>
 /// A sorted list
@@ -105,7 +103,7 @@ public class SortedList<T> where T:IComparable
             else
             {
                 // split data set to search appropriate side
-                if (middleValue.CompareTo(item) > 0)
+                if (middleValue.CompareTo(item) < 0)
                 {
                     upperBound = middleLocation - 1;
                 }
@@ -124,6 +122,7 @@ public class SortedList<T> where T:IComparable
     public void Sort()
     {
         items.Sort();
+        items.Reverse();
     }
 
     /// <summary>
